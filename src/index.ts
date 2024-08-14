@@ -3,8 +3,6 @@ import BunyanLogger, { LogLevel, Stream } from "bunyan";
 import { createLogger, format, transports } from "winston";
 import os from "os";
 
-const logLevel: LogLevel = (process.env.LOG_LEVEL as LogLevel) || "info";
-const streams: Stream[] = [{ stream: process.stdout, level: logLevel }];
 const serviceName = process.env.CI_PROJECT_NAME || "unknown";
 interface StdLogObject {
 	message: string;
@@ -20,6 +18,8 @@ interface StdLogObject {
 // *******
 // BUNYAN
 // *******
+const logLevel: LogLevel = (process.env.LOG_LEVEL as LogLevel) || "info";
+const streams: Stream[] = [{ stream: process.stdout, level: logLevel }];
 
 export const blogger = BunyanLogger.createLogger({
 	name: serviceName,
