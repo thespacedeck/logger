@@ -48,6 +48,28 @@ const levelMap: { [key: string]: number } = {
 	info: 30,
 	debug: 20,
 };
+const consoleFormat = format.combine(
+	// colorize the output based on the level
+	format.colorize(),
+	// format objects from plain text strings to objects in terminal
+	format.printf(({ level, message, ...meta }) => {
+		const metaString = Object.keys(meta).length
+			? JSON.stringify(meta, null, 2)
+			: "";
+		return `${level}: ${message} ${metaString}`;
+	})
+);
+const transportsArray: transports.StreamTransportInstance[] = [];
+if (process.env.NODE_ENV === "development") {
+	transportsArray.push(
+		new transports.Console({
+			format: consoleFormat,
+			level: process.env.LOG_LEVEL,
+		})
+	);
+} else {
+	transportsArray.push(new transports.Stream({ stream: process.stdout }));
+}
 const wlogger = createLogger({
 	level: process.env.LOG_LEVEL,
 	format: format.combine(
@@ -66,7 +88,8 @@ const wlogger = createLogger({
 			});
 		})
 	),
-	transports: [new transports.Stream({ stream: process.stdout })],
+	// switch the NODE_ENV variable to determine if the logs are written to console or stdout
+	transports: transportsArray,
 });
 
 // Wrapper function to enforce StdLogObject type
@@ -75,6 +98,7 @@ function logWrapper(level: string, logObject: StdLogObject) {
 }
 
 // Extend the logger with custom methods
+// switch the LOG_LEVEL variable to see the desired log output level
 const logger = {
 	info: (logObject: StdLogObject) => logWrapper("info", logObject),
 	error: (logObject: StdLogObject) => logWrapper("error", logObject),
