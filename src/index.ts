@@ -27,10 +27,17 @@ export const blogger = BunyanLogger.createLogger({
 	streams,
 });
 
+// Usage
 // blogger.info("Hello info", { wret: "wert" });
 // blogger.error("Hello error", { wret: "wert" });
 // blogger.warn("Hello warn", { wret: "wert" });
 // blogger.debug("Hello debug", { wret: "wert" });
+
+// example output
+// {"name":"sb-logger-project","hostname":"osName...","pid":87591,"level":30,"msg":"Hello info { wret: 'wert' }","time":"2024-08-14T11:19:09.712Z","v":0}
+// {"name":"sb-logger-project","hostname":"osName...","pid":87591,"level":50,"msg":"Hello error { wret: 'wert' }","time":"2024-08-14T1:19:09.712Z","v":0}
+// {"name":"sb-logger-project","hostname":"osName...","pid":87591,"level":40,"msg":"Hello warn { wret: 'wert' }","time":"2024-08-14T11:19:09.712Z","v":0}
+// {"name":"sb-logger-project","hostname":"osName...","pid":87591,"level":20,"msg":"Hello debug { wret: 'wert' }","time":"2024-08-14T11:19:09.712Z","v":0}
 
 // *******
 // WINSTON
@@ -92,3 +99,9 @@ logger.debug({
 	message: "Hello debug",
 	meta_data: { trace_id: "123", stack: "NODE", wret: "wert" },
 });
+
+// example output
+// {"name":"sb-logger-project","hostname":"osName...","pid":87395,"level":30,"msg":"Hello info","time":"2024-08-14T11:16:51.678Z","meta_data":{"trace_id":"123","stack":"NODE","wret":"wert"}}
+// {"name":"sb-logger-project","hostname":"osName...","pid":87395,"level":50,"msg":"Hello error","time":"2024-08-14T11:16:51.678Z","meta_data":{"trace_id":"123","stack":"NODE","wret":"wert"}}
+// {"name":"sb-logger-project","hostname":"osName...","pid":87395,"level":40,"msg":"Hello warn","time":"2024-08-14T11:16:51.678Z","meta_data":{"trace_id":"123","stack":"NODE","wret":"wert"}}
+// {"name":"sb-logger-project","hostname":"osName...","pid":87395,"level":20,"msg":"Hello debug","time":"2024-08-14T11:16:51.679Z","meta_data":{"trace_id":"123","stack":"NODE","wret":"wert"}}
