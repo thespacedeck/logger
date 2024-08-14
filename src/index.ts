@@ -42,6 +42,7 @@ const levelMap: { [key: string]: number } = {
 	debug: 20,
 };
 const wlogger = createLogger({
+	level: process.env.LOG_LEVEL,
 	format: format.combine(
 		format.label({ label: serviceName }),
 		format.timestamp(),
