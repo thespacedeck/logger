@@ -73,7 +73,7 @@ if (process.env.NODE_ENV === "development") {
 const wlogger = createLogger({
 	level: process.env.LOG_LEVEL,
 	format: format.combine(
-		format.label({ label: serviceName }),
+		format.label({ label: serviceName }), // infra already emits this so we can replace this with a custom label
 		format.timestamp(),
 		format.printf(({ timestamp, level, message, label, ...meta }) => {
 			return JSON.stringify({
